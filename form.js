@@ -75,7 +75,7 @@ class Form {
 
     validateField(field, complete = true) {
         let type = field.dataset.validateType;
-        if (field.value.length === 0 && !complete) {
+        if (field.value.length === 0) {
             let message = this.errors['errorEmpty'];
             if (field.dataset.errorEmpty) {
                 message = field.dataset.errorEmpty;
