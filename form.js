@@ -75,16 +75,14 @@ class Form {
 
     validateField(field, complete = true) {
         let type = field.dataset.validateType;
-        if (field.value.length === 0) {
-            if (complete) {
-                let message = this.errors['errorEmpty'];
-                if (field.dataset.errorEmpty) {
-                    message = field.dataset.errorEmpty;
-                }
-                this.fieldError(field, message);
+        if (field.value.length === 0 && !complete) {
+            let message = this.errors['errorEmpty'];
+            if (field.dataset.errorEmpty) {
+                message = field.dataset.errorEmpty;
             }
+            this.fieldError(field, message);
             return false;
-        } else if (type) {
+        } else if (type && complete) {
             if (type) {
                 let toValidate = field.value;
                 let regex = this.regex[type];
