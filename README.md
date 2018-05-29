@@ -13,14 +13,7 @@ Inputs that are to be validated must have the `required` attribute.
 
 ### Initialize
 
-- Initialize the script with your form's id.
-```html
-<script>
-  let form = new Form({ formId: 'id' });
-</script>
-```
-
-- Apply the options you want
+Initialize the script with your form's id.
 ```html
 <script>
   let form = new Form({ formId: 'id' });
