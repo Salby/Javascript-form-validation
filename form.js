@@ -1,16 +1,22 @@
 class Form {
-    constructor(formId, options = {
-        'validate': true,
-        'customStyles': false
-    }, regex = {
-        'name': /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/,
-        'email': /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-    }) {
+    constructor(formId, {
+        validate = true,
+        customStyles = false,
+        regex = {
+            name: /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/,
+            email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        },
+        errors = {
+            errorEmpty: 'Field is empty',
+            errorIncorrect: 'Input is incorrect'
+        },
+        }) {
         this.form = document.getElementById(formId);
         this.inputs = this.form.querySelectorAll('input');
-        this.validate = options['validate'];
-        this.customStyles = options['customStyles'];
+        this.validate = validate;
+        this.customStyles = customStyles;
         this.regex = regex;
+        this.errors = errors;
         this.initForm();
         this.form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -71,7 +77,10 @@ class Form {
         let type = field.dataset.validateType;
         if (field.value.length === 0) {
             if (complete) {
-                let message = 'Field is empty';
+                let message = this.errors['errorEmpty'];
+                if (field.dataset.errorEmpty) {
+                    message = field.dataset.errorEmpty;
+                }
                 this.fieldError(field, message);
             }
             return false;
@@ -82,7 +91,10 @@ class Form {
                 if (regex.exec(toValidate)) {
                     return true;
                 } else {
-                    let message = 'Error in field';
+                    let message = this.errors['errorIncorrect'];
+                    if (field.dataset.errorIncorrect) {
+                        message = field.dataset.errorIncorrect;
+                    }
                     this.fieldError(field, message);
                 }
             }
