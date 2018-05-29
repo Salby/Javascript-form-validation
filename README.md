@@ -16,7 +16,7 @@ Inputs that are to be validated must have the `required` attribute.
 - Initialize the script with your form's id.
 ```html
 <script>
-  let form = new Form('id');
+  let form = new Form('id', {});
 </script>
 ```
 
