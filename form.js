@@ -1,5 +1,6 @@
 class Form {
-    constructor(formId, {
+    constructor({
+        formId = null,
         validate = true,
         customStyles = false,
         regex = {
@@ -9,8 +10,8 @@ class Form {
         errors = {
             errorEmpty: 'Field is empty',
             errorIncorrect: 'Input is incorrect'
-        },
-        }) {
+        }
+    }) {
         this.form = document.getElementById(formId);
         this.inputs = this.form.querySelectorAll('input');
         this.validate = validate;
@@ -38,17 +39,19 @@ class Form {
         if (!this.customStyles) {
             field.label = findSibling(field, 'label');
         }
-        if (field.value.length > 0) {
+        if (!this.customStyles && field.value.length > 0) {
             field.label.classList.add('hovering');
         }
-        field.addEventListener('focusin', () => {
-            if (field.label) {
-                field.label.classList.add('hovering');
-                field.label.classList.add('focus');
-            }
-        });
+        if (!this.customStyles) {
+            field.addEventListener('focusin', () => {
+                if (field.label) {
+                    field.label.classList.add('hovering');
+                    field.label.classList.add('focus');
+                }
+            });
+        }
         field.addEventListener('focusout', () => {
-            if (field.label) {
+            if (!this.customStyles && field.label) {
                 field.label.classList.remove('focus');
                 if (field.value.length === 0) {
                     field.label.classList.remove('hovering');
@@ -75,14 +78,14 @@ class Form {
 
     validateField(field, complete = true) {
         let type = field.dataset.validateType;
-        if (field.value.length === 0) {
+        if (field.value.length === 0 && complete) {
             let message = this.errors['errorEmpty'];
             if (field.dataset.errorEmpty) {
                 message = field.dataset.errorEmpty;
             }
             this.fieldError(field, message);
             return false;
-        } else if (type && complete) {
+        } else if (type) {
             if (type) {
                 let toValidate = field.value;
                 let regex = this.regex[type];
