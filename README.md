@@ -23,9 +23,7 @@ Inputs that are to be validated must have the `required` attribute.
 - Apply the options you want
 ```html
 <script>
-  let form = new Form('id', {
-    /* Your settings here */
-  });
+  let form = new Form({ formId: 'id' });
 </script>
 ```
 
@@ -39,7 +37,8 @@ You can use custom regex by giving your input the data-validate-type attribute.
 Then set the regex when you initialize the form.
 ```html
 <script>
-  let form = new Form('id', {
+  let form = new Form({
+    formId: 'id',
     regex: {
       myCustomRegex: /ab+c/
     }
@@ -65,4 +64,20 @@ errors: {
   errorIncorrect: 'Message when input is incorrect'
 }
 ```
+
+#### Example
+```html
+<script>
+  let form = new Form({
+    formId: 'id',
+    validate: false,
+    customStyles: true,
+    errors: {
+      errorEmpty: 'There is nothing here',
+      errorIncorrect: 'This is also wrong'
+    }
+  });
+</script>
 ```
+
+
