@@ -2,7 +2,7 @@
 
 A form validation script with support for my custom MD styles, regex &amp; more.
 
-Inputs that are to be validated must have the 'required' attribute.
+Inputs that are to be validated must have the `required` attribute.
 
 ## How-to
 
